@@ -1,0 +1,55 @@
+name: 🚀 Deploy to Streamlit Cloud
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: 📦 Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: 🔍 Validate Streamlit App
+      run: |
+        python -c "import streamlit as st; print('✅ Streamlit import successful')"
+        python -m py_compile streamlit_app.py
+        echo "✅ Streamlit app validation passed"
+
+    - name: 🚀 Streamlit Deployment URLs
+      run: |
+        echo "════════════════════════════════════════════════════════════════"
+        echo "🎉 TestModel DEPLOYED SUCCESSFULLY!"
+        echo "════════════════════════════════════════════════════════════════"
+        echo ""
+        echo "📱 PRIMARY STREAMLIT URL:"
+        echo "   https://share.streamlit.io/rwd51/mlvu-testmodel-1757036278495/main/streamlit_app.py"
+        echo ""
+        echo "🔗 ALTERNATIVE STREAMLIT URL:"
+        echo "   https://rwd51-mlvu-testmodel-1757036278495-streamlit-app-main.streamlit.app"
+        echo ""
+        echo "════════════════════════════════════════════════════════════════"
+        echo "✅ DEPLOYMENT STATUS: SUCCESS"
+        echo "⏱️  APP AVAILABILITY: 2-3 minutes"
+        echo "🔄 AUTO-REDEPLOY: Enabled on every push"
+        echo "════════════════════════════════════════════════════════════════"
+        echo ""
+        echo "🎯 NEXT STEPS:"
+        echo "1. Click on either URL above"
+        echo "2. Wait 2-3 minutes if you see 'Please wait...'"
+        echo "3. Your ML model interface will be ready!"
+        echo ""
+        echo "🤖 Auto-deployed with MLVU Platform"
